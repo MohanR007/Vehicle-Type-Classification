@@ -82,11 +82,26 @@ See [TEST_CASES.md](TEST_CASES.md) for real vehicle examples.
 - **Model Missing**: Run `python create_model.py` in model folder
 - **Port Issues**: Backend uses 5000, Frontend uses 3000
 
+## 🌐 Deployment
+
+This project is ready for deployment on Render, Heroku, or similar platforms.
+
+**Quick Deploy to Render:**
+1. Push code to GitHub
+2. Connect repository to Render
+3. Deploy backend and frontend as separate services
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed instructions.
+
 ## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch
 3. Submit a pull request
+
+## 📄 License
+
+MIT License - feel free to use this project for learning and development.
 
 ---
 

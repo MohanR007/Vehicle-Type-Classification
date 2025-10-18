@@ -7,7 +7,12 @@ import os
 from datetime import datetime
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+# Configure CORS for production
+CORS(app, origins=[
+    "http://localhost:3000",
+    "https://*.onrender.com",
+    "https://vtc-frontend.onrender.com"
+])
 
 # Global variable to store the model
 model = None
@@ -133,6 +138,18 @@ def home():
         'message': 'Vehicle Type Classification API',
         'status': 'active',
         'model_loaded': model is not None,
+        'timestamp': datetime.now().isoformat(),
+        'version': '1.0.0'
+    })
+
+@app.route('/health', methods=['GET'])
+def health_check():
+    """Detailed health check for monitoring"""
+    return jsonify({
+        'status': 'healthy' if model is not None else 'unhealthy',
+        'model_loaded': model is not None,
+        'api_version': '1.0.0',
+        'python_version': '3.11.0',
         'timestamp': datetime.now().isoformat()
     })
 
@@ -200,4 +217,8 @@ def model_info():
 if __name__ == '__main__':
     print("Starting Flask app with detailed model...")
     load_model()
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=False, host='0.0.0.0', port=port)
+
+# Load model on startup (for production)
+load_model()

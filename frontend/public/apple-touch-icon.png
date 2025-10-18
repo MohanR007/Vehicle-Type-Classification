@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background with rounded corners for iOS -->
+  <rect x="0" y="0" width="180" height="180" rx="40" fill="url(#grad1)"/>
+  
+  <!-- Car Body -->
+  <rect x="45" y="81" width="90" height="36" rx="18" fill="#ffffff" opacity="0.95"/>
+  
+  <!-- Car Roof -->
+  <rect x="63" y="63" width="54" height="27" rx="13" fill="#ffffff" opacity="0.8"/>
+  
+  <!-- Wheels -->
+  <circle cx="63" cy="126" r="12" fill="#1e293b" stroke="#ffffff" stroke-width="2"/>
+  <circle cx="117" cy="126" r="12" fill="#1e293b" stroke="#ffffff" stroke-width="2"/>
+  
+  <!-- Wheel Centers -->
+  <circle cx="63" cy="126" r="4" fill="#6b7280"/>
+  <circle cx="117" cy="126" r="4" fill="#6b7280"/>
+  
+  <!-- Windshield -->
+  <rect x="68" y="68" width="44" height="16" rx="6" fill="#3b82f6" opacity="0.4"/>
+  
+  <!-- AI Label -->
+  <text x="90" y="45" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#ffffff">AI</text>
+  
+  <!-- Classification dots -->
+  <circle cx="90" cy="150" r="3" fill="#ffffff" opacity="0.7"/>
+  <circle cx="90" cy="160" r="2" fill="#ffffff" opacity="0.5"/>
+  <circle cx="90" cy="168" r="1.5" fill="#ffffff" opacity="0.3"/>
+</svg>

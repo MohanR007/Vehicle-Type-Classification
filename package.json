@@ -1,0 +1,21 @@
+{
+  "name": "vehicle-type-classification",
+  "version": "1.0.0",
+  "description": "AI-powered vehicle classification system",
+  "scripts": {
+    "install-backend": "pip install -r requirements.txt",
+    "install-frontend": "cd frontend && npm install",
+    "build-model": "cd model && python create_model.py",
+    "build-frontend": "cd frontend && npm run build",
+    "start-backend": "cd backend && python app.py",
+    "start-frontend": "cd frontend && npm start",
+    "deploy": "npm run install-backend && npm run build-model && npm run install-frontend && npm run build-frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MohanR007/vtc.git"
+  },
+  "keywords": ["machine-learning", "vehicle-classification", "flask", "react", "ai"],
+  "author": "MohanR007",
+  "license": "MIT"
+}
