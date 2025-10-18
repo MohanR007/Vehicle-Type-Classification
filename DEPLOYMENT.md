@@ -37,7 +37,7 @@ This guide will help you deploy the Vehicle Type Classification project on Rende
    - **Plan**: Free
 4. Add Environment Variables:
    - `NODE_VERSION` = `18.17.0`
-   - `REACT_APP_API_URL` = `https://vtc-backend.onrender.com`
+   - `REACT_APP_API_URL` = `https://vehicle-type-classification.onrender.com`
 5. Click "Create Web Service"
 
 ### Option 2: Using render.yaml (Infrastructure as Code)
@@ -98,9 +98,9 @@ This guide will help you deploy the Vehicle Type Classification project on Rende
 
 ## URLs After Deployment
 
-- **Backend API**: `https://vtc-backend.onrender.com`
-- **Frontend App**: `https://vtc-frontend.onrender.com`
-- **API Documentation**: `https://vtc-backend.onrender.com/model-info`
+- **Backend API**: `https://vehicle-type-classification.onrender.com`
+- **Frontend App**: `https://vehicle-type-classification-frontend.onrender.com`
+- **API Documentation**: `https://vehicle-type-classification.onrender.com/model-info`
 
 ## Free Tier Limitations
 

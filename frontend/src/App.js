@@ -5,7 +5,7 @@ import VehicleForm from './components/VehicleForm';
 import ResultDisplay from './components/ResultDisplay';
 import Header from './components/Header';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://vehicle-type-classification.onrender.com';
 
 function App() {
   const [formData, setFormData] = useState({
@@ -91,7 +91,8 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-        timeout: 10000 // 10 second timeout
+        timeout: 15000, // 15 second timeout
+        withCredentials: false // Disable credentials for CORS
       });
 
       setPrediction(response.data);
@@ -103,7 +104,12 @@ function App() {
         const message = error.response.data?.error || 'Classification failed';
         toast.error(message);
       } else if (error.request) {
-        toast.error('Unable to connect to the server. Please check if the backend is running.');
+        // Check if it's a CORS error
+        if (error.message.includes('Network Error') || error.code === 'ERR_NETWORK') {
+          toast.error('CORS Error: Unable to connect to backend. Please check if the API server is running and CORS is properly configured.');
+        } else {
+          toast.error('Unable to connect to the server. Please check if the backend is running.');
+        }
       } else {
         toast.error('An unexpected error occurred');
       }

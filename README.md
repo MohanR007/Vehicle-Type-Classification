@@ -4,6 +4,10 @@ A full-stack web application that uses machine learning to classify vehicle type
 
 ![ML](https://img.shields.io/badge/ML-99.3%25_Accuracy-brightgreen) ![React](https://img.shields.io/badge/React-18.2.0-blue) ![Flask](https://img.shields.io/badge/Flask-2.3.3-red)
 
+## 🌐 Live Demo
+
+**Try it now:** [https://vehicle-type-classification-frontend.onrender.com/](https://vehicle-type-classification-frontend.onrender.com/)
+
 ## 🎯 Features
 
 - **Frontend**: React with Tailwind CSS, responsive design, real-time validation
@@ -65,7 +69,13 @@ npm start
 
 **Example:**
 ```bash
+# Local development
 curl -X POST http://localhost:5000/predict \
+  -H "Content-Type: application/json" \
+  -d '{"length": 4.88, "height": 1.45, "width": 1.84, "weight": 1590, "engine_power": 203, "top_speed": 210, "axle_count": 2, "seats": 5, "fuel_type": "petrol"}'
+
+# Production API
+curl -X POST https://vehicle-type-classification.onrender.com/predict \
   -H "Content-Type: application/json" \
   -d '{"length": 4.88, "height": 1.45, "width": 1.84, "weight": 1590, "engine_power": 203, "top_speed": 210, "axle_count": 2, "seats": 5, "fuel_type": "petrol"}'
 ```

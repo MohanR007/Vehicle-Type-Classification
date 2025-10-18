@@ -7,12 +7,19 @@ import os
 from datetime import datetime
 
 app = Flask(__name__)
-# Configure CORS for production
-CORS(app, origins=[
-    "http://localhost:3000",
-    "https://*.onrender.com",
-    "https://vtc-frontend.onrender.com"
-])
+# Configure CORS for development and production
+CORS(app, 
+     origins=[
+         "http://localhost:3000",
+         "http://127.0.0.1:3000", 
+         "https://vehicle-type-classification-frontend.onrender.com",
+         "https://vehicle-type-classification.onrender.com",
+         "https://*.onrender.com"
+     ],
+     methods=['GET', 'POST', 'OPTIONS'],
+     allow_headers=['Content-Type', 'Authorization'],
+     supports_credentials=True
+)
 
 # Global variable to store the model
 model = None
@@ -131,6 +138,32 @@ def preprocess_input(data):
     
     return np.array(features).reshape(1, -1)
 
+# Add OPTIONS handler for preflight requests
+@app.before_request
+def handle_preflight():
+    if request.method == "OPTIONS":
+        response = jsonify({'status': 'OK'})
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        response.headers.add('Access-Control-Allow-Headers', "Content-Type,Authorization")
+        response.headers.add('Access-Control-Allow-Methods', "GET,PUT,POST,DELETE,OPTIONS")
+        return response
+
+@app.after_request
+def after_request(response):
+    """Add CORS headers to all responses"""
+    origin = request.headers.get('Origin')
+    if origin in [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000", 
+        "https://vehicle-type-classification-frontend.onrender.com",
+        "https://vehicle-type-classification.onrender.com"
+    ]:
+        response.headers.add('Access-Control-Allow-Origin', origin)
+    response.headers.add('Access-Control-Allow-Headers', "Content-Type,Authorization")
+    response.headers.add('Access-Control-Allow-Methods', "GET,PUT,POST,DELETE,OPTIONS")
+    response.headers.add('Access-Control-Allow-Credentials', 'true')
+    return response
+
 @app.route('/', methods=['GET'])
 def home():
     """Health check endpoint"""
@@ -140,6 +173,16 @@ def home():
         'model_loaded': model is not None,
         'timestamp': datetime.now().isoformat(),
         'version': '1.0.0'
+    })
+
+@app.route('/cors-test', methods=['GET', 'POST', 'OPTIONS'])
+def cors_test():
+    """Test CORS configuration"""
+    return jsonify({
+        'message': 'CORS is working correctly!',
+        'method': request.method,
+        'origin': request.headers.get('Origin', 'No origin header'),
+        'timestamp': datetime.now().isoformat()
     })
 
 @app.route('/health', methods=['GET'])
