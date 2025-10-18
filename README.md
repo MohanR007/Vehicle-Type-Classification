@@ -7,8 +7,8 @@ A full-stack web application that uses machine learning to classify vehicle type
 ## 🎯 Features
 
 - **Frontend**: React with Tailwind CSS, responsive design, real-time validation
-- **Backend**: Flask API with Random Forest classifier (99.3% accuracy) 
-- **Vehicle Types**: Bike, Car, SUV, Bus, Truck
+- **Backend**: Flask API with Random Forest classifier (99.2% accuracy) 
+- **Vehicle Categories**: 17 detailed types including Scooter, Sports Bike, Sedan, Hatchback, Compact SUV, Pickup Truck, etc.
 - **Input Features**: Length, Height, Width, Weight, Engine Power, Top Speed, Axles, Seats, Fuel Type
 
 ## 📁 Project Structure
@@ -50,7 +50,12 @@ npm start
 2. Click "Classify Vehicle" for instant prediction
 3. View result and confidence score
 
-**Supported Types:** 🏍️ Bike, 🚗 Car, 🚙 SUV, 🚌 Bus, 🚛 Truck
+**Supported Categories:**
+- **Two-Wheelers:** 🛵 Scooter, 🏍️ Standard Motorcycle, 🏁 Sports Bike, 🏍️ Cruiser Bike
+- **Cars:** 🚗 Hatchback, 🚙 Sedan, 🚘 Luxury Sedan, 🚐 Station Wagon  
+- **SUVs:** 🚙 Compact SUV, 🚙 Mid-Size SUV, � Full-Size SUV
+- **Trucks:** 🛻 Pickup Truck, � Light Commercial Truck, �🚛 Heavy Truck
+- **Buses:** 🚐 Mini Bus, 🚌 City Bus, 🚌 Coach Bus
 
 ## 🔧 API Endpoints
 

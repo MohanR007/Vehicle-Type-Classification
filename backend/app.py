@@ -29,7 +29,9 @@ def load_model():
         
         if os.path.exists(model_path):
             model = joblib.load(model_path)
-            print(f"Model loaded successfully from {model_path}")
+            print(f"NEW DETAILED Model loaded successfully from {model_path}")
+            if hasattr(model, 'classes_'):
+                print(f"Model classes: {list(model.classes_)}")
         else:
             print(f"Model file not found at {model_path}")
             # Create a dummy model for demonstration
@@ -196,5 +198,6 @@ def model_info():
     return jsonify(info)
 
 if __name__ == '__main__':
+    print("Starting Flask app with detailed model...")
     load_model()
     app.run(debug=True, host='0.0.0.0', port=5000)

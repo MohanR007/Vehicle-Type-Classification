@@ -3,15 +3,64 @@ import React from 'react';
 const ResultDisplay = ({ prediction }) => {
   const getVehicleEmoji = (vehicleType) => {
     const vehicleEmojis = {
+      // Two-Wheelers
+      'Scooter': '🛵',
+      'Standard_Motorcycle': '🏍️',
+      'Sports_Bike': '🏁',
+      'Cruiser_Bike': '🏍️',
+      
+      // Cars
+      'Hatchback': '🚗',
+      'Sedan': '🚙',
+      'Luxury_Sedan': '🚘',
+      'Wagon': '🚐',
+      
+      // SUVs
+      'Compact_SUV': '🚙',
+      'Mid_Size_SUV': '🚙',
+      'Full_Size_SUV': '🚙',
+      
+      // Trucks
+      'Pickup_Truck': '�',
+      'Light_Truck': '�',
+      'Heavy_Truck': '�🚛',
+      
+      // Buses
+      'Mini_Bus': '🚐',
+      'City_Bus': '🚌',
+      'Coach_Bus': '🚌',
+      
+      // Fallbacks
       'Bike': '🏍️',
       'Car': '🚗',
       'SUV': '🚙',
       'Bus': '🚌',
-      'Truck': '🚛',
-      'Motorcycle': '🏍️',
-      'Van': '🚐'
+      'Truck': '�'
     };
     return vehicleEmojis[vehicleType] || '🚗';
+  };
+
+  const getVehicleDisplayName = (vehicleType) => {
+    const displayNames = {
+      'Scooter': 'Scooter',
+      'Standard_Motorcycle': 'Standard Motorcycle',
+      'Sports_Bike': 'Sports Bike',
+      'Cruiser_Bike': 'Cruiser Bike',
+      'Hatchback': 'Hatchback',
+      'Sedan': 'Sedan',
+      'Luxury_Sedan': 'Luxury Sedan',
+      'Wagon': 'Station Wagon',
+      'Compact_SUV': 'Compact SUV',
+      'Mid_Size_SUV': 'Mid-Size SUV',
+      'Full_Size_SUV': 'Full-Size SUV',
+      'Pickup_Truck': 'Pickup Truck',
+      'Light_Truck': 'Light Commercial Truck',
+      'Heavy_Truck': 'Heavy Truck',
+      'Mini_Bus': 'Mini Bus',
+      'City_Bus': 'City Bus',
+      'Coach_Bus': 'Coach Bus'
+    };
+    return displayNames[vehicleType] || vehicleType;
   };
 
   const getConfidenceColor = (confidence) => {
@@ -37,10 +86,10 @@ const ResultDisplay = ({ prediction }) => {
           {getVehicleEmoji(prediction.prediction)}
         </div>
         <div className="text-3xl font-bold text-gray-800 mb-2">
-          {prediction.prediction}
+          {getVehicleDisplayName(prediction.prediction)}
         </div>
         <div className="text-lg text-gray-600">
-          Predicted Vehicle Type
+          Predicted Vehicle Category
         </div>
       </div>
 
