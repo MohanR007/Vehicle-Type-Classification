@@ -1,0 +1,132 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Install Frontend Dependencies",
+            "type": "shell",
+            "command": "powershell.exe",
+            "args": ["-ExecutionPolicy", "Bypass", "-Command", "npm install"],
+            "options": {
+                "cwd": "${workspaceFolder}/frontend"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "detail": "Install React application dependencies"
+        },
+        {
+            "label": "Install Backend Dependencies",
+            "type": "shell",
+            "command": "python",
+            "args": ["-m", "pip", "install", "-r", "requirements.txt"],
+            "options": {
+                "cwd": "${workspaceFolder}/backend"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "detail": "Install Python Flask dependencies"
+        },
+        {
+            "label": "Create ML Model",
+            "type": "shell",
+            "command": "python",
+            "args": ["create_model.py"],
+            "options": {
+                "cwd": "${workspaceFolder}/model"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "detail": "Generate the machine learning model"
+        },
+        {
+            "label": "Start Backend Server",
+            "type": "shell",
+            "command": "python",
+            "args": ["app.py"],
+            "options": {
+                "cwd": "${workspaceFolder}/backend"
+            },
+            "group": "test",
+            "isBackground": true,
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated"
+            },
+            "problemMatcher": [],
+            "detail": "Start Flask development server on port 5000"
+        },
+        {
+            "label": "Start Frontend Server",
+            "type": "shell",
+            "command": "powershell.exe",
+            "args": ["-ExecutionPolicy", "Bypass", "-Command", "npm start"],
+            "options": {
+                "cwd": "${workspaceFolder}/frontend"
+            },
+            "group": "test",
+            "isBackground": true,
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated"
+            },
+            "problemMatcher": [],
+            "detail": "Start React development server on port 3000"
+        },
+        {
+            "label": "Build Frontend",
+            "type": "shell",
+            "command": "powershell.exe",
+            "args": ["-ExecutionPolicy", "Bypass", "-Command", "npm run build"],
+            "options": {
+                "cwd": "${workspaceFolder}/frontend"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "detail": "Build React application for production"
+        },
+        {
+            "label": "Setup Complete Project",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Install Backend Dependencies",
+                "Create ML Model",
+                "Install Frontend Dependencies"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "detail": "Complete project setup - install all dependencies and create model"
+        }
+    ]
+}
