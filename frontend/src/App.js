@@ -87,6 +87,9 @@ function App() {
         seats: parseInt(formData.seats)
       };
 
+      console.log('Making request to:', `${API_BASE_URL}/predict`);
+      console.log('Request data:', apiData);
+      
       const response = await axios.post(`${API_BASE_URL}/predict`, apiData, {
         headers: {
           'Content-Type': 'application/json',
@@ -94,6 +97,8 @@ function App() {
         timeout: 15000, // 15 second timeout
         withCredentials: false // Disable credentials for CORS
       });
+      
+      console.log('Response received:', response.data);
 
       setPrediction(response.data);
       toast.success('Vehicle classified successfully!');

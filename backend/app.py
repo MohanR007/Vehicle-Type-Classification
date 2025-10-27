@@ -143,25 +143,41 @@ def preprocess_input(data):
 def handle_preflight():
     if request.method == "OPTIONS":
         response = jsonify({'status': 'OK'})
-        response.headers.add("Access-Control-Allow-Origin", "*")
-        response.headers.add('Access-Control-Allow-Headers', "Content-Type,Authorization")
+        origin = request.headers.get('Origin')
+        if origin in [
+            "http://localhost:3000",
+            "http://127.0.0.1:3000", 
+            "https://vehicle-type-classification-frontend.onrender.com",
+            "https://vehicle-type-classification.onrender.com"
+        ]:
+            response.headers.add("Access-Control-Allow-Origin", origin)
+        response.headers.add('Access-Control-Allow-Headers', "Content-Type,Authorization,X-Requested-With")
         response.headers.add('Access-Control-Allow-Methods', "GET,PUT,POST,DELETE,OPTIONS")
+        response.headers.add('Access-Control-Max-Age', '3600')
         return response
 
 @app.after_request
 def after_request(response):
     """Add CORS headers to all responses"""
     origin = request.headers.get('Origin')
-    if origin in [
+    allowed_origins = [
         "http://localhost:3000",
         "http://127.0.0.1:3000", 
         "https://vehicle-type-classification-frontend.onrender.com",
         "https://vehicle-type-classification.onrender.com"
-    ]:
+    ]
+    
+    if origin in allowed_origins:
         response.headers.add('Access-Control-Allow-Origin', origin)
-    response.headers.add('Access-Control-Allow-Headers', "Content-Type,Authorization")
+        print(f"Added CORS header for origin: {origin}")
+    else:
+        # For debugging - allow all origins temporarily
+        response.headers.add('Access-Control-Allow-Origin', origin or '*')
+        print(f"Added CORS header for unknown origin: {origin}")
+    
+    response.headers.add('Access-Control-Allow-Headers', "Content-Type,Authorization,X-Requested-With")
     response.headers.add('Access-Control-Allow-Methods', "GET,PUT,POST,DELETE,OPTIONS")
-    response.headers.add('Access-Control-Allow-Credentials', 'true')
+    response.headers.add('Access-Control-Allow-Credentials', 'false')
     return response
 
 @app.route('/', methods=['GET'])
@@ -178,6 +194,24 @@ def home():
 @app.route('/cors-test', methods=['GET', 'POST', 'OPTIONS'])
 def cors_test():
     """Test CORS configuration"""
+    print(f"CORS test called with method: {request.method}")
+    print(f"Origin: {request.headers.get('Origin', 'No origin')}")
+    
+    if request.method == 'OPTIONS':
+        print("Handling OPTIONS in cors-test")
+        return jsonify({'status': 'OK'})
+    
+    if request.method == 'POST':
+        data = request.get_json()
+        print(f"POST data received: {data}")
+        return jsonify({
+            'message': 'CORS POST is working correctly!',
+            'received_data': data,
+            'method': request.method,
+            'origin': request.headers.get('Origin', 'No origin header'),
+            'timestamp': datetime.now().isoformat()
+        })
+    
     return jsonify({
         'message': 'CORS is working correctly!',
         'method': request.method,
@@ -196,14 +230,25 @@ def health_check():
         'timestamp': datetime.now().isoformat()
     })
 
-@app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['POST', 'OPTIONS'])
 def predict():
     """Predict vehicle type based on input features"""
+    print(f"Predict endpoint called from origin: {request.headers.get('Origin', 'No origin')}")
+    print(f"Request method: {request.method}")
+    print(f"Content-Type: {request.headers.get('Content-Type', 'No content type')}")
+    
+    # Handle OPTIONS request (preflight)
+    if request.method == 'OPTIONS':
+        print("Handling OPTIONS request in predict endpoint")
+        return jsonify({'status': 'OK'})
+    
     try:
         if model is None:
+            print("Error: Model not loaded")
             return jsonify({'error': 'Model not loaded'}), 500
         
         data = request.get_json()
+        print(f"Received data: {data}")
         
         # Validate required fields
         required_fields = [
